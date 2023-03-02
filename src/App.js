@@ -1,12 +1,12 @@
-import './scss/App.scss';
-import { Loader } from './components/Loader/Loader';
 
-function App() {
-	document.title = 'DePO - Обмен криптовалюты'
+// components
+import { Header } from "./components/Header/Header";
+
+// function
+const App = () => {
 	return (
 		<div className="app">
-			<h1>Проект «<span>DePO</span>» находится в стадии разработки.</h1>
-			<Loader />
+			<Header />
 		</div>
 	);
 }
