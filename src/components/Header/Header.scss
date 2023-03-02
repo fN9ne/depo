@@ -1,0 +1,409 @@
+@import '../../scss/vars';
+@import '../../scss/rv';
+$headerVerticalPadding: 20px;
+.header {
+	background-color: $white;
+	padding: $headerVerticalPadding 0;
+	position: relative;
+	&__container {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__main,
+	&__sub {
+		display: flex;
+		align-items: center;
+		height: 48px;
+		gap: 24px;
+		@include rv('gap', 24, 15, 1480, 992);
+		@media (max-width: 455px) {
+			height: auto;
+		}
+	}
+	&__sub {
+		.locale {
+			@media (max-width: 600px) {
+				display: none;
+			}
+		}
+	}
+	&__main {
+		@media (max-width: 992px) {
+			.navigation {
+				display: none;
+			}
+			.header {
+				&__divider {
+					display: none;
+				}
+			}
+		}
+	}
+	&__divider {
+		width: 1px;
+		height: 100%;
+		background-color: $stroke;
+	}
+	&__logo {
+		@include rv('width', 129, 97, 600, 320);
+	}
+	&__burger {
+		width: 32px;
+		aspect-ratio: 1 / 1;
+		cursor: pointer;
+		position: relative;
+		z-index: 3;
+		display: none;
+		transition: 350ms;
+		@media (max-width: 455px) {
+			width: 24px;
+		}
+		@media (hover: hover) {
+			&:hover {
+				background-color: $background;
+			}
+		}
+		@media (max-width: 992px) {
+			display: block;
+		}
+		span {
+			content: '';
+			position: absolute;
+			left: 4px;
+			width: 24px;
+			height: 2px;
+			background-color: $dark;
+			transition: 350ms;
+			@media (max-width: 455px) {
+				width: 16px;
+			}
+			&:nth-of-type(1) {
+				top: 7px;
+				@media (max-width: 455px) {
+					top: 5px;
+				}
+			}
+			&:nth-of-type(2) {
+				top: 15px;
+				@media (max-width: 455px) {
+					top: 11px;
+				}
+			}
+			&:nth-of-type(3) {
+				bottom: 7px;
+				@media (max-width: 455px) {
+					bottom: 5px;
+				}
+			}
+		}
+		&.active {
+			span {
+				&:nth-of-type(1) {
+					top: 15px;
+					transform: rotate(-45deg);
+					@media (max-width: 455px) {
+						top: 11px;
+					}
+				}
+				&:nth-of-type(2) {
+					transform: scale(0);
+				}
+				&:nth-of-type(3) {
+					bottom: 15px;
+					transform: rotate(45deg);
+					@media (max-width: 455px) {
+						top: 11px;
+					}
+				}
+			}
+		}
+	}
+}
+.navigation {
+	height: 100%;
+	&__list {
+		height: inherit;
+		display: flex;
+		gap: 40px;
+		@include rv('gap', 40, 20, 1480, 992);
+	}
+	&__item {
+		height: inherit;
+	}
+	&__link {
+		color: $gray;
+		font-weight: 500;
+		height: inherit;
+		display: flex;
+		align-items: center;
+		position: relative;
+		transition: 350ms;
+		font-size: 16px;
+		@include rv('font-size', 16, 15, 1480, 992);
+		@include rv('font-size', 15, 14, 992, 550);
+		&::before {
+			content: '';
+			width: 100%;
+			height: 2px;
+			background-color: #3E8BF3;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			transform: translateY($headerVerticalPadding);
+			transition: 350ms;
+			opacity: 0;
+			visibility: hidden;
+		}
+		@media (hover: hover) {
+			&:hover {
+				color: $blue;
+				&::before {
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+		@media (hover: none) {
+			&:active {
+				color: $blue;
+				&::before {
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+	}
+}
+.locale {
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	&__current {
+		display: flex;
+		cursor: pointer;
+		@media (hover: hover) {
+			&:hover {
+				.locale {
+					&__text {
+						color: $blue;
+					}
+					&__dropdown svg path {
+						stroke: $blue;
+					}
+				}
+			}
+		}
+		@media (hover: none) {
+			&:active {
+				.locale {
+					&__text {
+						color: $blue;
+					}
+					&__dropdown svg path {
+						stroke: $blue;
+					}
+				}
+			}
+		}
+	}
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+	&__dropdown {
+		width: 24px;
+		aspect-ratio: 1 / 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		svg {
+			transition: 350ms;
+		}
+	}
+	&__body {
+		position: absolute;
+		padding: 8px;
+		border-radius: 16px;
+		background-color: $white;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		transition: 350ms;
+		left: 50%;
+		top: calc(100% + $headerVerticalPadding + 4px);
+		&.entering,
+		&.entered {
+			opacity: 1;
+			visibility: visible;
+			transform: scale(1) translateX(-50%) translateY(0);
+		}
+		&.exiting,
+		&.exited {
+			opacity: 0;
+			visibility: hidden;
+			transform: scale(0.95) translateX(-50%) translateY(-15px);
+		}
+		.locale {
+			&__item {
+				height: 40px;
+				padding: 0 16px;
+				border-radius: 8px;
+				cursor: pointer;
+				transition: 350ms;
+				@media (hover: hover) {
+					&:hover {
+						background-color: $background;
+					}
+				}
+				@media (hover: none) {
+					&:active {
+						background-color: $background;
+					}
+				}
+			}
+		}
+	}
+	&__text {
+		color: $dark;
+		font-weight: 500;
+		font-size: 16px;
+		transition: 350ms;
+		@include rv('font-size', 16, 14, 1480, 320);
+	}
+	&__icon {
+		svg {
+			width: 20px;
+			aspect-ratio: 1 / 1;
+		}
+	}
+}
+.burger-content {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	justify-content: flex-end;
+	z-index: 2;
+	$burgerContainerPaddings: 32px;
+	display: none;
+	@media (max-width: 992px) {
+		display: flex;
+	}
+	@media (max-width: 550px) {
+		$burgerContainerPaddings: 24px;
+	}
+	&__area {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: $dark;
+		z-index: 1;
+		transition: 350ms;
+	}
+	&__container {
+		background-color: $white;
+		position: relative;
+		z-index: 2;
+		transition: 350ms;
+		padding: 88px $burgerContainerPaddings 40px;
+		transform: translateX(100%);
+		overflow: auto;
+		@include rv('width', 280, 192, 992, 320);
+	}
+	&.entering,
+	&.entered {
+		.burger-content {
+			&__area {
+				opacity: 0.8;
+				visibility: visible;
+			}
+			&__container {
+				transform: translateX(0);
+			}
+		}
+	}
+	&.exiting,
+	&.exited {
+		.burger-content {
+			&__area {
+				opacity: 0;
+				visibility: hidden;
+			}
+			&__container {
+				transform: translateX(100%);
+			}
+		}
+	}
+	&__divider {
+		display: none;
+		background-color: $stroke;
+		width: 100%;
+		height: 1px;
+		margin-bottom: 24px;
+		@media (max-width: 600px) {
+			display: block;
+		}
+	}
+	.navigation {
+		height: auto;
+		margin: -12px (-$burgerContainerPaddings) 12px;
+		&__list {
+			flex-direction: column;
+			gap: 0;
+		}
+		&__link {
+			padding: 12px $burgerContainerPaddings;
+			line-height: 24px;
+			&::before {
+				display: none;
+			}
+			@media (hover: hover) {
+				&:hover {
+					background-color: $background;
+				}
+			}
+			@media (hover: none) {
+				&:active {
+					background-color: $background;
+				}
+			}
+		}
+	}
+	.locale {
+		display: none;
+		height: auto;
+		&__label {
+			color: $gray;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 16px;
+			margin-bottom: 14px;
+		}
+		&__body {
+			padding: 0;
+			position: static;
+			margin: 0 (-$burgerContainerPaddings);
+		}
+		&__text {
+			color: $gray;
+		}
+		&__item {
+			padding: 10px $burgerContainerPaddings;
+			&.active {
+				.locale {
+					&__text {
+						color: $dark;
+					}
+				}
+			}
+		}
+		@media (max-width: 600px) {
+			display: block;
+		}
+	}
+}

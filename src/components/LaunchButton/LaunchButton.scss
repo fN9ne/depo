@@ -1,0 +1,24 @@
+@import '../../scss/vars';
+@import '../../scss/rv';
+.button {
+	font-weight: 500;
+	font-size: 16px;
+	color: $white;
+	height: 48px;
+	padding: 0 16px;
+	background-color: $blue;
+	border-radius: 8px;
+	transition: 350ms;
+	@include rv('font-size', 16, 14, 1480, 320);
+	@include rv('padding-left', 16, 12, 1480, 320);
+	@include rv('padding-right', 16, 12, 1480, 320);
+	@include rv('height', 48, 36, 1480, 320);
+	@media (hover: hover) {
+		&:hover {
+			background-color: $darkBlue;
+		}
+	}
+	&:active {
+		background-color: #295DA2;
+	}
+}
